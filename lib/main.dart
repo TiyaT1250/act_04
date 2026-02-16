@@ -39,8 +39,33 @@ void _resetCounter(){
   
   });
 }
-List _displayprevCounters(){
-  return _lastCounters;
+void _displayPrevCounters() {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text("Past Counters"),
+        content: Container(
+          width: double.maxFinite,
+          height: 300,
+          child: ListView.builder(
+            itemCount: _lastCounters.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text("Value: ${_lastCounters[index]}"),
+              );
+            },
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text("Close"),
+          ),
+        ],
+      );
+    },
+  );
 }
 @override
 Widget build(BuildContext context) {
@@ -79,7 +104,7 @@ inactiveColor: Colors.red,),
 ElevatedButton(onPressed: _counter > 0? _decrementCounter: null, child: const Text("Decrement"),),
 ElevatedButton(onPressed: _counter> 0?  _resetCounter: null, child: const Text("Reset")),
 TextField(decoration: InputDecoration(helperText: 'Enter in a valid step value [0-100]'),),
-ElevatedButton(onPressed: _displayprevCounters, child: Text( "View past counters")),
+ElevatedButton(onPressed: _displayPrevCounters, child: Text( "View past counters")),
 
 
 ],
